@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>todo List</title>
+</head>
+
+<body>
+    <input id="newValue" type="text" />
+    <button onclick="add()">Add</button>
+    <ul id="todoList">
+    </ul>
+
+    <script>
+        var storageKey = 'todoList';
+        var data = JSON.parse(localStorage.getItem(storageKey));
+
+        if(data) {
+            var todoList = data;
+        } else var todoList = [];
+
+        function add() {
+            //get value from input
+            var value = document.getElementById('newValue');
+            var getvalue = value.value;
+            todoList.push(getvalue);
+            render();
+            value.value = "";
+            localStorage.setItem(storageKey, JSON.stringify(todoList))
+        }
+
+        function render() {
+            var changeList = todoList.map(function(item) {
+                return '<li>' + item + '</li>'
+            });
+            var getUl = document.getElementById('todoList');
+            getUl.innerHTML = changeList.join('');
+        }
+
+        render();
+
+
+    </script>
+</body>
+
+</html>
